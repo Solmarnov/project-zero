@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Baloo+2&display=swap" rel="stylesheet">
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -25,46 +25,49 @@
 
             <div class="container main search">
                 <div class="card-body">
-                    <form>
+                    <form class="needs-validation" novalidate>
                         <p>Movie or Tv Show:</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="movie">
+                        <div class="form-check form-check-inline" id="movie-tv">
+                            <input class="form-check-input" type="checkbox" id="movie" value="movie">
                             <label class="form-check-label" for="movie">Movie</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="tvShow">
-                            <label class="form-check-label" for="tvShows">Tv Show</label>
-                          </div>
-                          <br>
-                          <br>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="tvShows" value="tvShow">
+                            <label class="form-check-label" for="tvShows">TV Show</label>
+                        </div>
+                        <div class="d-none not-valid" id="movie-tv">
+                          Would you like to search Movies or TV Shows?
+                        </div>
+                        <br>
+                        <br>
                         <div class="form-group">
                           <label for="genre">Genre:</label>
                           <input type="text" class="form-control" id="genre">
                         </div>
                         <p>Rating:</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="G">
-                            <label class="form-check-label" for="inlineCheckbox1">G</label>
+                            <input class="form-check-input" type="checkbox" id="rated-g" value="G">
+                            <label class="form-check-label" for="rated-g">G</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PG">
-                            <label class="form-check-label" for="inlineCheckbox2">PG</label>
+                            <input class="form-check-input" type="checkbox" id="rated-pg" value="PG">
+                            <label class="form-check-label" for="rated-pg">PG</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="M">
-                            <label class="form-check-label" for="inlineCheckbox3">M</label>
+                            <input class="form-check-input" type="checkbox" id="rated-m" value="M">
+                            <label class="form-check-label" for="rated-m">M</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="MA15+">
-                            <label class="form-check-label" for="inlineCheckbox4">MA15+</label>
+                            <input class="form-check-input" type="checkbox" id="rated-ma15" value="MA15+">
+                            <label class="form-check-label" for="rated-ma15">MA15+</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="R18+">
-                            <label class="form-check-label" for="inlineCheckbox5">R18+</label>
+                            <input class="form-check-input" type="checkbox" id="rated-r18" value="R18+">
+                            <label class="form-check-label" for="rated-r18">R18+</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="all">
-                            <label class="form-check-label" for="inlineCheckbox4">all</label>
+                            <input class="form-check-input" type="checkbox" id="all-ratings" value="all">
+                            <label class="form-check-label" for="all-ratings">all</label>
                           </div>
                           <br>
                           <br>
@@ -77,7 +80,7 @@
                             <input type="text" class="form-control" id="directors">
                           </div>
                       </form>
-                    <button type="button" class="btn btn-primary search">
+                    <button type="submit" class="btn btn-primary search" id="search">
                         <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
@@ -115,6 +118,8 @@
         <br>
 
         <footer></footer>
+
+        <script src="scriptSD.js"></script>
 
     </body>
 </html>
