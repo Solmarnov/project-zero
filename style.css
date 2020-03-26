@@ -1,0 +1,58 @@
+body{
+    font-family: 'Baloo 2', cursive;
+}
+header{
+    padding: 30px;
+    background-color: rgb(45, 77, 184);
+    color: whitesmoke;
+}
+
+h1{
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+}
+
+.para{
+    text-align: center;
+}
+.main {
+    padding: 20px 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-style: hidden;
+}
+
+footer {
+    padding: 30px;
+    background-color: rgb(45, 77, 184);
+    color: whitesmoke;
+}
+.col {
+    padding: 20px;
+    width: 100%;
+}
+.card {
+    margin-left: 55px;
+    text-align: center;
+}
+.btn {
+
+}
+@media only screen and (min-width: 1200px){
+    .col {
+        width: 33.33%;
+    }
+    .card {
+        margin-left: auto;
+    }
+}
+@media only screen and (min-width: 768px){
+    .col {
+        width: 50%;
+    }
+    .card {
+        margin-left: auto;
+    }
+}
