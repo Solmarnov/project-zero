@@ -87,6 +87,13 @@ $("#search").click(function() {
 
 }); 
 
+$("#clear").click(function(){
+    console.log('clear');
+    $("#type").val(' ');
+    $("#genre").val('');
+    $("#studio").val(''); 
+}); 
+
 
 
 
