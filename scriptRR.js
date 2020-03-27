@@ -44,6 +44,7 @@ if($('#firstPS').prop('checked')){
 }
 */
 
+
 function buildQueryURL(){
     /* queryURL is the URL to query API */ 
     var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query= "
@@ -64,9 +65,57 @@ function buildQueryURL(){
 }
 
 
+$("#search").click(function() {
+    var gType = $("#type")
+        .val()
+        .trim();
+    
+
+    var genType = $("#genre")
+        .val()
+        .trim();
+
+    var studio = $("#studio")
+        .val()
+        .trim();
+
+
+
+    console.log(gType);
+    console.log(genType);
+    console.log(studio);
+
+}); 
 
 
 
 
 
 
+
+/* 
+
+*/ 
+
+    /*
+  var search1 = document.getElementById( "type").nodeValue; 
+  console.log(search1).val.trim;
+  
+  
+  $("#type").val;
+  console.log(search);
+
+    
+});
+
+$("#clear").click(function() {
+    console.log("clear");
+  });
+
+  
+  document.getElementById('btnSearch').onclick = function() {
+    var search = document.getElementById('search').value;
+    var searchEncoded = encodeURIComponent(search);
+    window.location.url = "http://www.website.com/search/" + searchEncoded;
+}
+*/
