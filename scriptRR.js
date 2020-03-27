@@ -47,12 +47,19 @@ if($('#firstPS').prop('checked')){
 
 function buildQueryURL(){
     /* queryURL is the URL to query API */ 
-    var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query= "
+    var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json "
     
     /* set the API Key, format (JSON), query and resource */ 
+    var queryParams = {"query": gType, genType, studio}
+    console.log(queryParams)
+    
+    /*
+    
     var queryParams ={"api_key" : "39c89d285fcb0941c08ccdc2220bde62bff4e8c3",
                       "format" : "json",
                       "query": " ",}
+
+    */ 
 
                       
 
@@ -63,6 +70,8 @@ function buildQueryURL(){
     console.log(queryURL + $.param(queryParams));
     
 }
+
+
 
 
 $("#search").click(function() {
@@ -85,6 +94,9 @@ $("#search").click(function() {
     console.log(genType);
     console.log(studio);
 
+    var queryParams = {"query": gType, genType, studio}
+    console.log(queryParams)
+
 }); 
 
 $("#clear").click(function(){
@@ -94,8 +106,11 @@ $("#clear").click(function(){
     $("#studio").val(''); 
 }); 
 
-
-
+/*
+$.ajax({
+    url: queryURL,
+    method: "GET"
+  }); 
 
 
 
