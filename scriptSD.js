@@ -16,7 +16,7 @@ parameterKeys = {
     shortFilm: ['shortFilmArtist', 'shortFilm'],
     tvShow: ['tvEpisode', 'tvSeason'],
     software: ['software', 'iPadSoftware', 'macSoftware'],
-    ebook: ['ebook'],
+    ebook: 'ebook',
     all: ['movie', 'album', 'allArtist', 'podcast', 'musicVideo', 'mix', 'audiobook', 'tvSeason', 'allTrack'],
   },
   attribute: { // The following attributes are available for each media type:
