@@ -61,16 +61,19 @@ $('#search').on('click', (event) => {
   
   let isMovie = checkboxMovie[0].checked;
   let isTVShow = checkboxTV[0].checked;
+  let queryResponse = null;
 
   getMovieTVShow(isMovie, isTVShow);
 
   console.log(mediaKey);
 
   $.ajax({
-    url: 'https://itunes.apple.com/search?term=dora+the+explorer&country=au&media=movie&media=tvShow&limit=2',
+    url: 'https://itunes.apple.com/search?term=r18&country=au&media=movie&attribute=ratingIndex&rating=r18&limit=5',
     method: "GET"
   }).then(function(response) {
-    console.log(response);
+    queryResponse = response;
+    console.log(queryResponse);
+    queryResponse = null;
   });
 
   function getMovieTVShow(isMovie, isTVShow) {
