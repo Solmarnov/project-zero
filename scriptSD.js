@@ -61,17 +61,17 @@ $('#search').on('click', (event) => {
   parameterKeys.term = 'term=' + searchTermInput.val();
   let limitKey = '&limit=' + parameterKeys.limit;
   let queryURL = '';
-  let queryResponse = null;
 
   getMovieTVShow(isMovie, isTVShow);
   queryURL = iTunesBaseQueryURL + parameterKeys.term + mediaKey + limitKey;
-
   console.log(queryURL);
+
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    queryResponse = response;
+    
+    console.log(response);
   });
 
   function getMovieTVShow(isMovie, isTVShow) {
@@ -97,21 +97,18 @@ $('#search').on('click', (event) => {
     };
   };
 
-  function buildQueryURL() {
-    for (i = 0; i < queryURLArray.length; i++) {
-      if (queryURLArray[i] === '') {
-        console.log('index blank')
-        return;
-      } else {
-        queryURL += queryURLArray[i];
-        console.log(queryURLArray[i].val());
-      };
-    };
-  };
-
 });
 
+$('#clear-results').on('click', () => {
+  clearForm();
+  resetParameterKeys();
+});
 
+function clearForm() {
+  checkboxMovie[0].checked = false;
+  checkboxTV[0].checked = false;
+  searchTermInput.val('');
+};
 
 function resetParameterKeys() {
   parameterKeys.term = '';
