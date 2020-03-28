@@ -2,6 +2,8 @@
 https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 */
 
+const iTunesBaseQueryURL = 'https://itunes.apple.com/search?';
+
 // The following object defines the parameter keys and values you can specify to search for content within the iTunes Store or Apple Books Store
 parameterKeys = {
   term: '', // Required
@@ -31,29 +33,24 @@ parameterKeys = {
     all: ['actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm']
   },
   callback: 'wsSearchCB', // Required for cross-site searches. The name of the Javascript callback function you want to use when returning search results to your website. For example: wsSearchCB.
-  limit: 25, // The number of search results you want the iTunes Store to return. For example: 25.The default is 50.
+  limit: 5, // The number of search results you want the iTunes Store to return. For example: 25.The default is 50.
   lang: 'en_au',
   version: 2, // The search result key version you want to receive back from your search.The default is 2.
   explicit: ['Yes', 'No'] // A flag indicating whether or not you want to include explicit content in your search results.The default is Yes.
 };
 
-const baseQueryURL = 'https://itunes.apple.com/search?';
-let termKey = 'term=' + parameterKeys.term; 
-let countryKey = '&country=' + parameterKeys.country;
-let mediaKey = ''; // refer getMovieTVShow function
-
 // ****** TO WATCH PAGE ****** // 
 const checkboxMovie = $('#movie');
 const checkboxTV = $('#tvShows');
-const genreInput = $('#genre');
-const checkboxRatedG = $('#rated-g');
-const checkboxRatedPG = $('#rated-pg');
-const checkboxRatedM = $('#rated-m');
-const checkboxRatedMA15 = $('#rated-ma15');
-const checkboxRatedR18 = $('#rated-r18');
-const checkboxAllRatings = $('#all-ratings');
-const actorsInput = $('#actors');
-const directorsInput = $('#directors');
+const searchTermInput = $('#search-term')
+// const checkboxRatedG = $('#rated-g');
+// const checkboxRatedPG = $('#rated-pg');
+// const checkboxRatedM = $('#rated-m');
+// const checkboxRatedMA15 = $('#rated-ma15');
+// const checkboxRatedR18 = $('#rated-r18');
+// const checkboxAllRatings = $('#all-ratings');
+// const actorsInput = $('#actors');
+// const directorsInput = $('#directors');
 
 
 $('#search').on('click', (event) => {
@@ -61,19 +58,20 @@ $('#search').on('click', (event) => {
   
   let isMovie = checkboxMovie[0].checked;
   let isTVShow = checkboxTV[0].checked;
+  parameterKeys.term = 'term=' + searchTermInput.val();
+  let limitKey = '&limit=' + parameterKeys.limit;
+  let queryURL = '';
   let queryResponse = null;
 
   getMovieTVShow(isMovie, isTVShow);
+  queryURL = iTunesBaseQueryURL + parameterKeys.term + mediaKey + limitKey;
 
-  console.log(mediaKey);
-
+  console.log(queryURL);
   $.ajax({
-    url: 'https://itunes.apple.com/search?term=r18&country=au&media=movie&attribute=ratingIndex&rating=r18&limit=5',
+    url: queryURL,
     method: "GET"
   }).then(function(response) {
     queryResponse = response;
-    console.log(queryResponse);
-    queryResponse = null;
   });
 
   function getMovieTVShow(isMovie, isTVShow) {
@@ -96,6 +94,18 @@ $('#search').on('click', (event) => {
       notValid.css('color', 'red');
       notValid.attr('class', 'not-valid');
       mediaKey = '';
+    };
+  };
+
+  function buildQueryURL() {
+    for (i = 0; i < queryURLArray.length; i++) {
+      if (queryURLArray[i] === '') {
+        console.log('index blank')
+        return;
+      } else {
+        queryURL += queryURLArray[i];
+        console.log(queryURLArray[i].val());
+      };
     };
   };
 
