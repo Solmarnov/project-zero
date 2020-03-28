@@ -1,9 +1,14 @@
 
+var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query="
+
 /*
 var apikey = "39c89d285fcb0941c08ccdc2220bde62bff4e8c3";
 var baseUrl = "http://www.giantbomb.com/api";
 
 var firstPersonShooter = "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22first%20person%20shooter%22&resource_type=games";
+console.log(firstPersonShooter);
+
+/*
 var massiveMultiplayerOnline = "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22massively%20multiplayer%20online%22&resource_type=games";
 var rolePlayingGame = "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22role%20playing%20game%22&resource_type=game";
 */ 
@@ -53,9 +58,40 @@ $("#search").click(function() {
     console.log(genType);
     console.log(studio);
 
+    
+
+
+    
+
     var queryParams = {"query": gType, genType, studio}
-    console.log(queryParams)
+    
+    var searchResults = JSON.stringify(gType + genType  + studio );
+    console.log(searchResults);
+
+
+
+    
+
+    var actualSearch = queryURL + encodeURIComponent(searchResults); 
+    
+    /* $(queryURL + searchResults)
+    */ 
+    console.log(actualSearch); 
+
+    /*
+    
+    console.log(JSON.stringify(gType + genType + studio)); 
+    /*
+    console.log(queryURL) + stringify(queryParams); 
+
+
+    console.log(JSON.stringify(result))
+
+    */ 
+    
 }); 
+
+
 
 /* this is the clear input onclick function. Will clear inputs onClick */ 
 $("#clear").click(function(){
@@ -63,7 +99,19 @@ $("#clear").click(function(){
     $("#type").val(' ');
     $("#genre").val('');
     $("#studio").val(''); 
+
+  
 }); 
+
+/*
+$.ajax({
+    url: "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22first%20person%20shooter%22&resource_type=games",
+    method: "GET"
+  }).then(function(response) {
+    console.log(url);
+  });
+
+
 
 /*
 $.ajax({
