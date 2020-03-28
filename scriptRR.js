@@ -62,8 +62,10 @@ $("#search").click(function() {
 
 
     
-
+     /*
+    Keep till finished 
     var queryParams = {"query": gType, genType, studio}
+    */ 
     
     var searchResults = JSON.stringify(gType + genType  + studio );
     console.log(searchResults);
@@ -72,22 +74,10 @@ $("#search").click(function() {
 
     
 
-    var actualSearch = queryURL + encodeURIComponent(searchResults); 
-    
-    /* $(queryURL + searchResults)
-    */ 
+    var actualSearch = queryURL + encodeURIComponent(searchResults);  
     console.log(actualSearch); 
 
-    /*
-    
-    console.log(JSON.stringify(gType + genType + studio)); 
-    /*
-    console.log(queryURL) + stringify(queryParams); 
-
-
-    console.log(JSON.stringify(result))
-
-    */ 
+  
     
 }); 
 
