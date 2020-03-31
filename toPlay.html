@@ -15,81 +15,48 @@
 
     <body>
 
-        <ul>
-            <li><a href="main-page.html">Main Page</a></li>
+    <ul>
+        <li><a href="main-page.html">Main Page</a></li>
+        <li><a href="toWatch.html">Watch</a></li>
+        <li><a href="toListen.html">Listen</a></li>
+        <li><a href="toRead.html">Read</a></li>
+        <li><a href="toPlay.html">Play</a></li>
+    </ul>
 
-
-
-
-        </ul>
-       
-        <section>
-
-            <div class="container main search">
+            <!---Semantic HTML5 Tags-->
+            <main>
                 
-                <div class="card-body">
-                    <form>
-                        <p>What Are You Looking For?</p>
-                        <div class="form-group">
-                            <label for="type">Type: i.e. RPG, MMO, FPS</label>
-                            <input type="text" class="form-control" id="type">
-                        </div>
-                        <div class="form-group">
-                          <label for="genre">Genre:</label>
-                          <input type="text" class="form-control" id="genre">
-                        </div>
-                        <div class="form-group">
-                            <label for="studio">Platform</label>
-                            <input type="text" class="form-control" id="studio">
-                          </div>
-                      </form>
-                    <button type="button" class="btn btn-primary search" id="search">
-                        <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
-                          </svg>
-                        Search
-                    </button>
-                    
-                    <button type="button" class="btn btn-primary clear" id="clear">
-                        <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
-                          </svg>
-                        Clear Results
-                    </button>
-    
-                </div>
-              </div>
-            </div>
-            
-            <div class="container main results"></div>
+                <header>
+                    <h1>What Should I play?</h1>
+                </header>
 
-        </section>
+                <section>
+                    <div class="formDiv">
+                    <form action="#" class="gameSearch">
+                        <input required type="text" placeholder="Enter a Genre/Studio or Type" id="searchText">
+                        <button type="submit" id="submitButton">Find Game</button>
+                    </form>
+                    </div>              
+                </section>
 
-        <br>
+                <section>
+                    <!--This is where the game data will go--> 
+                    <!--<div class="flex-container"></div> --> 
+                    <div class = "modal-bg"></div>
+                </section>
 
-        <a href="main-page.html" class="btn backbtn btn-primary">
-            Back
-            <svg class="bi bi-arrow-counterclockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M12.83 6.706a5 5 0 00-7.103-3.16.5.5 0 11-.454-.892A6 6 0 112.545 5.5a.5.5 0 11.91.417 5 5 0 109.375.789z" clip-rule="evenodd"/>
-                <path fill-rule="evenodd" d="M7.854.146a.5.5 0 00-.708 0l-2.5 2.5a.5.5 0 000 .708l2.5 2.5a.5.5 0 10.708-.708L5.707 3 7.854.854a.5.5 0 000-.708z" clip-rule="evenodd"/>
-            </svg>
-        </a>
+            </main>
 
+    <div class="footer">
+        <p>Footer</p>
+    </div>
 
-      <!--   <div class="box">
-                  <p class="gameTitle">Game Title</p>
-                  <div class="siteLink">Score</div>
-                </div>
-                
-       </div> -->
-
-        <br>
-        <br>
-
-        <footer></footer>
-        <script src="https://code.jquery.com/jquery.js"></script>
-        <script src="scriptRR.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="jquery.js"></script> -->
+    <script type="text/javascript" src="Script Games\script.js"></script>
+ 
     </body>
+
 </html>
+       
+ 
