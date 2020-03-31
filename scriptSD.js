@@ -43,6 +43,8 @@ parameterKeys = {
 const checkboxMovie = $('#movie');
 const checkboxTV = $('#tvShows');
 const searchTermInput = $('#search-term')
+const searchResultsH1 = $('.results-heading');
+const resultsUlEl = $('.results-list');
 // const checkboxRatedG = $('#rated-g');
 // const checkboxRatedPG = $('#rated-pg');
 // const checkboxRatedM = $('#rated-m');
@@ -58,24 +60,81 @@ $('#search').on('click', (event) => {
   
   let isMovie = checkboxMovie[0].checked;
   let isTVShow = checkboxTV[0].checked;
+  let notValid = $('.not-valid');
   parameterKeys.term = 'term=' + searchTermInput.val();
   let limitKey = '&limit=' + parameterKeys.limit;
+  let langKey = '&lang=' + parameterKeys.lang;
   let queryURL = '';
 
-  getMovieTVShow(isMovie, isTVShow);
-  queryURL = iTunesBaseQueryURL + parameterKeys.term + mediaKey + limitKey;
-  console.log(queryURL);
+  // Form validation
+  if (isMovie == false && isTVShow == false) {
+    notValid.css('color', 'red');
+    notValid.attr('class', 'not-valid');
+    mediaKey = '';
+  } else {
+    getMovieTVShow(isMovie, isTVShow);
+    queryURL = iTunesBaseQueryURL + parameterKeys.term + mediaKey + limitKey + langKey;
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    
-    console.log(response);
-  });
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(responseString) {
+      searchResultsH1.attr('hidden', false);
+  
+      let response = JSON.parse(responseString);
+      let resultCount = response.resultCount;
+      let resultsArray = response.results;
+
+      console.log(resultsArray.length); // Passed
+      
+      for (let i = 0; i < resultsArray.length; i++) {
+        console.log(i);
+        // API response data
+        let title = resultsArray[i].trackName;
+        let thumbnail = resultsArray[i].artworkUrl60;
+        let releaseDate = resultsArray[i].releaseDate;
+        let releaseYear = releaseDate.slice(0, 4);
+        let shortDescription = resultsArray[i].shortDescription;
+        let longDescription = resultsArray[i].longDescription;
+        let previewURL = resultsArray[i].previewUrl;
+        // HTML elements to render results
+        let resultsLiEl = $('<li class="media mb-4">');
+        let imageEl = $('<img class="mr-3">');
+        let mediaBodyXSDiv = $('<div class="media-body d-md-none">');
+        let mediaBodyMDDiv = $('<div class="media-body d-none d-md-block">');
+        let h5ElXS = $('<h5 class="mt-0 mb-1">');
+        let h5ElMD = $('<h5 class="mt-0 mb-1">');
+        let previewDiv = $('<div class="preview d-none d-md-block my-2">');
+        let videoEl = $('<video>');
+        // Build list items
+        videoEl
+          .attr('src', previewURL)
+          .attr('controls', true);
+        previewDiv.append(videoEl);
+        h5ElXS.text(title + ' (' + releaseYear + ')');
+        h5ElMD.text(title + ' (' + releaseYear + ')');
+        mediaBodyXSDiv
+          .text(shortDescription)
+          .prepend(h5ElXS);
+        mediaBodyMDDiv
+          .text(longDescription)
+          .prepend(h5ElMD)
+          .append(previewDiv);
+        imageEl.attr('src', thumbnail);
+        resultsLiEl
+          .append(imageEl)
+          .append(mediaBodyXSDiv)
+          .append(mediaBodyMDDiv);
+        resultsUlEl.append(resultsLiEl);
+      };
+  
+      console.log('result count: ' + resultCount);
+      console.log(response);
+    });
+  };
+
 
   function getMovieTVShow(isMovie, isTVShow) {
-    let notValid = $('.not-valid');
     let mediaValueMovie = parameterKeys.media[0];
     let mediaValueTVShow = parameterKeys.media[6];
 
@@ -87,17 +146,13 @@ $('#search').on('click', (event) => {
       let mediaValue = '&media=' + mediaValueMovie;
       mediaKey = mediaValue;
       notValid.attr('class', 'd-none not-valid');
-    } else if (isTVShow) {
-      let mediaValue = '&media=' + mediaValueTVShow;
-      mediaKey = mediaValue; 
     } else {
-      notValid.css('color', 'red');
-      notValid.attr('class', 'not-valid');
-      mediaKey = '';
+      let mediaValue = '&media=' + mediaValueTVShow;
+      mediaKey = mediaValue;
     };
   };
-
 });
+
 
 $('#clear-results').on('click', () => {
   clearForm();
@@ -108,6 +163,8 @@ function clearForm() {
   checkboxMovie[0].checked = false;
   checkboxTV[0].checked = false;
   searchTermInput.val('');
+  searchResultsH1.attr('hidden', true);
+  resultsUlEl.empty();
 };
 
 function resetParameterKeys() {
@@ -117,85 +174,3 @@ function resetParameterKeys() {
   parameterKeys.lang = 'en_au';
   parameterKeys.version = 2;
 };
-
-
-/* Sample iTunes response
-var iTunesResponse = {
-  "resultCount":2,
-  "results": [
-    {
-      "wrapperType":"track", 
-      "kind":"feature-movie", 
-      "collectionId":1404489349, 
-      "trackId":1078111961, 
-      "artistName":"Tim Miller", 
-      "collectionName":"Deadpool 2-Movie Collection", 
-      "trackName":"Deadpool", 
-      "collectionCensoredName":"Deadpool 2-Movie Collection", 
-      "trackCensoredName":"Deadpool", 
-      "collectionArtistId":345346894, 
-      "collectionArtistViewUrl":"https://itunes.apple.com/us/artist/20th-century-fox-film/345346894?uo=4", 
-      "collectionViewUrl":"https://itunes.apple.com/us/movie/deadpool/id1078111961?uo=4", 
-      "trackViewUrl":"https://itunes.apple.com/us/movie/deadpool/id1078111961?uo=4", 
-      "previewUrl":"https://video-ssl.itunes.apple.com/itunes-assets/Video118/v4/ee/77/0b/ee770b8b-dc3b-423a-c695-fab7f47d5b0c/mzvf_6207691253036919622.640x354.h264lc.U.p.m4v", 
-      "artworkUrl30":"https://is3-ssl.mzstatic.com/image/thumb/Video4/v4/69/97/72/69977202-baa8-227d-26eb-18eddcc6c3f2/source/30x30bb.jpg", 
-      "artworkUrl60":"https://is3-ssl.mzstatic.com/image/thumb/Video4/v4/69/97/72/69977202-baa8-227d-26eb-18eddcc6c3f2/source/60x60bb.jpg", 
-      "artworkUrl100":"https://is3-ssl.mzstatic.com/image/thumb/Video4/v4/69/97/72/69977202-baa8-227d-26eb-18eddcc6c3f2/source/100x100bb.jpg", 
-      "collectionPrice":29.99, 
-      "trackPrice":14.99, 
-      "trackRentalPrice":3.99000, 
-      "collectionHdPrice":29.99000, 
-      "trackHdPrice":14.99000, 
-      "trackHdRentalPrice":3.99000, "releaseDate":"2016-02-12T08:00:00Z", 
-      "collectionExplicitness":"notExplicit", 
-      "trackExplicitness":"notExplicit", 
-      "discCount":1, 
-      "discNumber":1, 
-      "trackCount":2, 
-      "trackNumber":1, 
-      "trackTimeMillis":6521638, 
-      "country":"USA", 
-      "currency":"USD", 
-      "primaryGenreName":"Action & Adventure", "contentAdvisoryRating":"R", 
-      "shortDescription":"Based upon Marvel Comics’ most unconventional anti-hero, DEADPOOL tells the origin story of former", 
-      "longDescription":"Hold onto your chimichangas, folks. From the studio that brought you all 3 Taken films comes the block-busting, fourth-wall-breaking masterpiece about Marvel Comics’ sexiest anti-hero! Starring God’s perfect idiot Ryan Reynolds and a bunch of other \"actors,\" DEADPOOL is a giddy slice of awesomeness packed with more twists than Deadpool’s enemies’ intestines and more action than prom night. Amazeballs!", 
-      "hasITunesExtras":true
-    }, 
-    {
-      "wrapperType":"track", 
-      "kind":"song", 
-      "artistId":348127220, 
-      "collectionId":1098297339, 
-      "trackId":1098298400, 
-      "artistName":"Teamheadkick", 
-      "collectionName":"Deadpool (Original Motion Picture Soundtrack)", 
-      "trackName":"Deadpool Rap (Film Mix)", "collectionCensoredName":"Deadpool (Original Motion Picture Soundtrack)", 
-      "trackCensoredName":"Deadpool Rap (Film Mix)", "collectionArtistId":4091312, 
-      "collectionArtistName":"Junkie XL", 
-      "collectionArtistViewUrl":"https://music.apple.com/us/artist/junkie-xl/4091312?uo=4", 
-      "artistViewUrl":"https://music.apple.com/us/artist/teamheadkick/348127220?uo=4", 
-      "collectionViewUrl":"https://music.apple.com/us/album/deadpool-rap-film-mix/1098297339?i=1098298400&uo=4", 
-      "trackViewUrl":"https://music.apple.com/us/album/deadpool-rap-film-mix/1098297339?i=1098298400&uo=4", 
-      "previewUrl":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview18/v4/92/60/5e/92605e35-544e-d941-7444-df01a8d6052d/mzaf_4860065902071291787.plus.aac.p.m4a", 
-      "artworkUrl30":"https://is4-ssl.mzstatic.com/image/thumb/Music49/v4/21/a3/b7/21a3b7b5-fe1e-e7f4-0ba5-16c2f92bb948/source/30x30bb.jpg", 
-      "artworkUrl60":"https://is4-ssl.mzstatic.com/image/thumb/Music49/v4/21/a3/b7/21a3b7b5-fe1e-e7f4-0ba5-16c2f92bb948/source/60x60bb.jpg", 
-      "artworkUrl100":"https://is4-ssl.mzstatic.com/image/thumb/Music49/v4/21/a3/b7/21a3b7b5-fe1e-e7f4-0ba5-16c2f92bb948/source/100x100bb.jpg", 
-      "collectionPrice":9.99, 
-      "trackPrice":1.29, 
-      "releaseDate":"2016-02-12T12:00:00Z", 
-      "collectionExplicitness":"explicit", 
-      "trackExplicitness":"explicit", 
-      "discCount":1, 
-      "discNumber":1, 
-      "trackCount":23, 
-      "trackNumber":12, 
-      "trackTimeMillis":205577, 
-      "country":"USA", 
-      "currency":"USD", 
-      "primaryGenreName":"Soundtrack", 
-      "contentAdvisoryRating":"Explicit", 
-      "isStreamable":true
-    }
-  ]
-};
-*/
