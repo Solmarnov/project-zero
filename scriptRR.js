@@ -26,11 +26,13 @@ function queryGB(searchTerm, callback){
     console.log(callback)
 }
 
+// Was going to use lodash to create a count function to display number of results returned. 
+//Not finished
 /*
 function noCount(data){
    
     if(data.result.name.length > 0){
-        console.log("yas")
+        console.log("yes")
     } 
 }  $(noCount); */ 
 //Template literals and expressions. 
