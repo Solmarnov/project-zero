@@ -45,7 +45,7 @@ function displayGame(data){
 	var searchResults = data.results.map(htmlAdd);
 	 if(searchResults.length>0){
 	$(`.modal-bg`).html(searchResults);
-	fadeResults();
+
 }
 };
 
