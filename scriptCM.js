@@ -37,75 +37,91 @@ parameterKeys = {
     explicit: ['Yes', 'No'] // A flag indicating whether or not you want to include explicit content in your search results.The default is Yes.
   };
   
-  const baseQueryURL = 'https://itunes.apple.com/search?';
-  let termKey = 'term='
-  let countryKey = '&country=' + parameterKeys.country;
-  let genreKey = '&genre=' + genre
-  let authorKey = '&artistName=' + author
-  let limitKey = '&limit=' + parameterKeys.limit
-  let mediaKey = "&media=ebook";
+  var baseQueryURL = 'https://itunes.apple.com/search?';
+  var termKey = 'term=';
+  var countryKey = '&country=' + parameterKeys.country;
+  var genreKey = '&genre=';
+  var authorKey = '&artistName=' + author;
+  var limit = parameterKeys.limit
+  var limitKey = '&limit=' + limit;
+  var mediaKey = "&media=ebook";
 
-  // ****** TO READ PAGE ****** // 
 
-var genreVal = $('#genre').val()
-var genre = ""
-var authorVal = $('#author').val();
-var author = ""
-
-function validate() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  };
-  validate()
-
-$('#search').on('click', (event) => {
+$('.search').on('submit', (event) => {
     event.preventDefault();
   
-    getGenre();
-  
-    console.log(mediaKey);
-  
-    $.ajax({
-      url: 'https://itunes.apple.com/search?term=dora+the+explorer&country=au&media=movie&media=tvShow&limit=2' + termKey + countryKey + mediakey + limitKey,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response);
-    });
-  
-    function getGenre() {
-  
-     if (genreVal === "") {
-        genre = '';
-      }
-      else {    
-        genre = genreVal
-      } 
-    };
-    function getAuthor() {
+    $(".results").empty();
 
-    };
+    var genre = $('#genre').val();
   
+    var author = $('#author').val(); 
+
+    if ($("#author").val() === ""){
+      $.ajax({
+        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
+        method: "GET"
+      }).then(function(responseString) {
+        console.log(responseString)
+        var response = JSON.parse(responseString);
+        
+        console.log(response)
+  
+        for (i=0;i<limit;i++){
+          var li = $('<li>');
+          li.attr("class", "media");
+  
+          var img = $("<img>");
+          img.attr("class", "mr-3");
+          img.attr("scr", response.results[i].artworkUrl60);
+          img.attr("alt", "book cover")
+  
+          var div = $("<div>")
+          div.attr("class", "media-body")
+  
+          var title = $("<h5>" + response.results[i].trackName + "</h5>")
+          var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
+          var blurb = $("<p>" + response.results[i].description + "</p>")
+  
+          div.append(title + artist + "<br>" + blurb)
+          li.append(img + div)
+          $(".results").append(li)
+  
+        }
+      });
+    }
+
+    else {
+      $.ajax({
+        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + authorKey + author + mediaKey + limitKey,
+        method: "GET"
+      }).then(function(responseString) {
+        console.log(responseString)
+        var response = JSON.parse(responseString);
+        
+        console.log(response)
+  
+        for (i=0;i<limit;i++){
+            var li = $('<li>');
+            li.attr("class", "media");
+  
+            var img = $("<img>");
+            img.attr("class", "mr-3");
+            img.attr("scr", response.results[i].artworkUrl60);
+            img.attr("alt", "book cover")
+  
+            var div = $("<div>")
+            div.attr("class", "media-body")
+  
+            var title = $("<h5>" + response.results[i].trackName + "</h5>")
+            var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
+            var blurb = $("<p>" + response.results[i].description + "</p>")
+  
+            div.append(title + artist + "<br>" + blurb)
+            li.append(img + div)
+            $(".results").append(li)
+  
+          }
+      });
+    }
+    
   });
-  
-  
-  
-  function resetParameterKeys() {
-    parameterKeys.term = '';
-    parameterKeys.country = 'au';
-    parameterKeys.limit = 25;
-    parameterKeys.lang = 'en_au';
-    parameterKeys.version = 2;
-  };

@@ -1,58 +1,45 @@
 <!DOCTYPE html>
-  <html lang="en">
-
+ <html lang="en">
     <head>
-        <meta charset="UTF-8"> 
+        <meta charset="UTF-8">
         <title>Game Page</title>
-        <meta name="description" content="Blank">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="CSS Games\style.css">
         <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
-        <!---<link rel="stylesheet" href="normalize.css">--->
+        <link rel="stylesheet" href="CSS Games/styleGame.css"> 
         <link href="https://fonts.googleapis.com/css?family=Bungee|Cousine|Monoton|Press+Start+2P|VT323&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/png" href="Assets Games\gameicon.png">
+        <link rel=stylesheet href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
     </head>
+    
+    <header>
+      <h1>What Should I Play?</h1>
+    </header>
 
     <body>
-
-    <ul>
-        <li><a href="main-page.html">Main Page</a></li>
-        <li><a href="toWatch.html">Watch</a></li>
-        <li><a href="toListen.html">Listen</a></li>
-        <li><a href="toRead.html">Read</a></li>
-        <li><a href="toPlay.html">Play</a></li>
-    </ul>
-
-            <!---Semantic HTML5 Tags-->
-            <main>
-                <header>
-                    <h1>What Should I play?</h1>
-                </header>
-
+          <main>
                 <section>
                     <div class="formDiv">
-                        <form action="#" class="gameSearch">
-                            <input required type="text" placeholder="Enter a Genre/Studio or Type" id="searchText">
-                            <button type="submit" id="submitButton">Find Game</button>
-                        </form>
+                      <form action="#" class="gameSearch">
+                          <input required type="text" placeholder="Search for a Game" id="searchText">
+                          <button type="submit" id="submitButton">Find Game</button>
+                      </form>
                     </div>              
                 </section>
 
-                <section>
-                    <!--This is where the game data will go--> 
-                    <!--<div class="flex-container"></div> --> 
-                    <div class = "modal-bg"></div>
-                </section>
+              <section>
+                  <!--This is where the game data will go--> 
+                  <!--<div class="flex-container"></div> --> 
+                  <div class = "modal-bg"></div>
+              </section>
             </main>
 
-    <div class="footer">
-        <p>Footer</p>
-    </div>
+            <div class="footer">
+              <a href="main-page.html" id="fText">Main Page</a>
+            </div>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+              <!-- <script type="text/javascript" src="jquery.js"></script> -->
+              <script type="text/javascript" src="scriptRR.js"></script>
 
-    <!--JQuery API-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="Script Games\script.js"></script>
- 
     </body>
 
 </html>
