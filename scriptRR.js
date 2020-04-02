@@ -3,7 +3,6 @@ var apiKey = "39c89d285fcb0941c08ccdc2220bde62bff4e8c3"
 
 var searchURL = `https://www.giantbomb.com/api/search/`
 
-
 //the request to the giantbomb api, searchTerm and callback is inside watchSubmit()
 function queryGB(searchTerm, callback){
 	var settings = {
@@ -46,7 +45,7 @@ function displayGame(data){
 	var searchResults = data.results.map(htmlAdd);
 	 if(searchResults.length>0){
 	$(`.modal-bg`).html(searchResults);
-	fadeResults();
+
 }
 };
 
@@ -54,6 +53,8 @@ function displayGame(data){
 //.submit event is sent when user clicks 'find game' as button type = submit
 function watchSubmit() {
   $('form').submit(function(e) {
+      //fixed loading issue with prevent default
+    e.preventDefault();
     var queryTarget = $(e.currentTarget).find('#searchText');
     var query = queryTarget.val();
     queryTarget.val("");
@@ -64,6 +65,30 @@ function watchSubmit() {
 $(watchSubmit);
 
 
+//Get the button:
+mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+
+
+
+//============================================================
 //Search Parameters 
 
 /*
@@ -149,8 +174,6 @@ function updatePage(GBData) {
 
 
 */ 
-
-
 /*
 var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query="
 
@@ -196,7 +219,6 @@ function buildQueryURL(){
 */ 
 
 /*
-
 $("#search").click(function() {
 
   
@@ -217,10 +239,7 @@ $("#search").click(function() {
     console.log(genType);
     console.log(studio);
 
-});
-
-
-    
+});  
      /*
     Keep till finished 
     var queryParams = {"query": gType, genType, studio}
@@ -228,31 +247,17 @@ $("#search").click(function() {
     /*
     var searchResults = JSON.stringify(gType + genType  + studio );
     console.log(searchResults);
-
-
-
-    
-
     var actualSearch = queryURL + encodeURIComponent(searchResults);  
-    console.log(actualSearch); 
-
-  
-    
+    console.log(actualSearch);   
 }); 
-
-
-
 /* this is the clear input onclick function. Will clear inputs onClick */ 
 /*
 $("#clear").click(function(){
     console.log('clear');
     $("#type").val(' ');
     $("#genre").val('');
-    $("#studio").val(''); 
-
-  
+    $("#studio").val('');  
 }); 
-
 /*
 $.ajax({
     url: "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22first%20person%20shooter%22&resource_type=games",
@@ -260,9 +265,6 @@ $.ajax({
   }).then(function(response) {
     console.log(url);
   });
-
-
-
 /*
 $.ajax({
     url: queryURL,
