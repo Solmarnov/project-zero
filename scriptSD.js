@@ -57,7 +57,7 @@ const resultsUlEl = $('.results-list');
 
 $('#search').on('click', (event) => {
   event.preventDefault();
-  
+  resultsUlEl.empty();
   let isMovie = checkboxMovie[0].checked;
   let isTVShow = checkboxTV[0].checked;
   let notValid = $('.not-valid');
@@ -73,7 +73,7 @@ $('#search').on('click', (event) => {
     mediaKey = '';
   } else {
     getMovieTVShow(isMovie, isTVShow);
-    queryURL = iTunesBaseQueryURL + parameterKeys.term +countryKey + mediaKey + limitKey;
+    queryURL = iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + limitKey;
 
     $.ajax({
       url: queryURL,
@@ -82,17 +82,21 @@ $('#search').on('click', (event) => {
       searchResultsH1.attr('hidden', false);
   
       let response = JSON.parse(responseString);
-      let resultCount = response.resultCount;
       let resultsArray = response.results;
+      let resultCount = response.resultCount;
 
       console.log(resultsArray.length); // Passed
       
-      for (let i = 0; i < resultsArray.length; i++) {
+      for (let i = 0; i < resultCount; i++) {
         // API response data
         let title = resultsArray[i].trackName;
+        let trackViewURL = resultsArray[i].trackViewUrl;
         let thumbnail = resultsArray[i].artworkUrl60;
+        let trackPrice = resultsArray[i].trackPrice;
+        let trackRentalPrice = resultsArray[i].trackRentalPrice;
         let releaseDate = resultsArray[i].releaseDate;
         let releaseYear = releaseDate.slice(0, 4);
+        let advisoryRating = resultsArray[i].contentAdvisoryRating;
         let shortDescription = resultsArray[i].shortDescription;
         let longDescription = resultsArray[i].longDescription;
         let previewURL = resultsArray[i].previewUrl;
@@ -103,6 +107,12 @@ $('#search').on('click', (event) => {
         let mediaBodyMDDiv = $('<div class="media-body d-none d-md-block">');
         let h5ElXS = $('<h5 class="mt-0 mb-1">');
         let h5ElMD = $('<h5 class="mt-0 mb-1">');
+        let aElXS = $('<a>');
+        let aElMD = $('<a>');
+        let trackInfoDiv = $('<div class="track-info">');
+        let ratingSpan = $('<span class="advisory-rating mr-3">');
+        let priceSpan = $('<span class="to-buy-price mr-3">');
+        let rentSpan = $('<span class="to-rent-price mr-3">');
         let previewDiv = $('<div class="preview d-none d-md-block my-2">');
         let videoEl = $('<video>');
         // Build list items
@@ -110,13 +120,29 @@ $('#search').on('click', (event) => {
           .attr('src', previewURL)
           .attr('controls', true);
         previewDiv.append(videoEl);
-        h5ElXS.text(title + ' (' + releaseYear + ')');
-        h5ElMD.text(title + ' (' + releaseYear + ')');
+        aElXS
+          .attr('href', trackViewURL)
+          .attr('target', '_blank')
+          .text(title + ' (' + releaseYear + ')');
+        h5ElXS.append(aElXS);
+        aElMD
+          .attr('href', trackViewURL)
+          .attr('target', '_blank')
+          .text(title + ' (' + releaseYear + ')');
+        h5ElMD.append(aElMD);
+        ratingSpan.text('Rating: ' + advisoryRating);
+        priceSpan.text('Buy: $' + trackPrice);
+        rentSpan.text('Rent: $' + trackRentalPrice);
+        trackInfoDiv
+          .append(ratingSpan)
+          .append(priceSpan)
+          .append(rentSpan);
         mediaBodyXSDiv
           .text(shortDescription)
           .prepend(h5ElXS);
         mediaBodyMDDiv
           .text(longDescription)
+          .prepend(trackInfoDiv)
           .prepend(h5ElMD)
           .append(previewDiv);
         imageEl.attr('src', thumbnail);
