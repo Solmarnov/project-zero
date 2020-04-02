@@ -105,13 +105,16 @@ $('.search').on('submit', (event) => {
           artist.attr("href", response.results[i].artistViewUrl )
           artist.attr("target", "_blank")
 
+          var price = $("<p>")
+          price.text(response.results[i].formattedPrice)
+
           var blurb = $("<p>")
           blurb.html(response.results[i].description)
   
           div.append(title)
           div.append("<br>")
           div.append(artist)
-          div.append("<br>")
+          div.append(price)
           div.append("<br>")
           div.append(blurb)
 
