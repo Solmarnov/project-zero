@@ -50,72 +50,78 @@ parameterKeys = {
 $('.search').on('submit', (event) => {
     event.preventDefault();
   
-    
+    $(".results").empty();
+
     var genre = $('#genre').val();
   
     var author = $('#author').val(); 
 
-    $.ajax({
-      url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
-      method: "GET"
-    }).then(function(responseString) {
-      console.log(responseString)
-      var response = JSON.parse(responseString);
-      
-      console.log(response)
-
-      for (i=0;i<limit;i++){
-        var li = $('<li>');
-        li.attr("class", "media");
-
-        var img = $("<img>");
-        img.attr("class", "mr-3");
-        img.attr("scr", response.results[i].artworkUrl60);
-        img.attr("alt", "book cover")
-
-        var div = $("<div>")
-        div.attr("class", "media-body")
-
-        var title = $("<h5>" + response.results[i].trackName + "</h5>")
-        var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
-        var blurb = $("<p>" + response.results[i].description + "</p>")
-
-        div.append(title + artist + "<br>" + blurb)
-        li.append(img + div)
-        $("results").append(li)
-
-      }
-    });
-  
-    //$.ajax({
-    //  url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + authorKey + author + mediaKey + limitKey,
-    //  method: "GET"
-    //}).then(function(responseString) {
-    //  console.log(responseString)
-    //  var response = JSON.parse(responseString);
-    //  
-    //  console.log(response)
-
-    //  for (i=0;i<limit;i++){
-    //    var li = $('<li>');
-    //    li.attr("class", "media");
-    //    var img = $("<img>");
-    //    img.attr("class", "mr-3");
-    //    img.attr("scr", response.results[i].artworkUrl60);
-    //    img.attr("alt", "book cover")
-    //    var div = $("<div>")
-    //    div.attr("class", "media-body")
+    if ($("#author").val() === ""){
+      $.ajax({
+        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
+        method: "GET"
+      }).then(function(responseString) {
+        console.log(responseString)
+        var response = JSON.parse(responseString);
         
+        console.log(response)
+  
+        for (i=0;i<limit;i++){
+          var li = $('<li>');
+          li.attr("class", "media");
+  
+          var img = $("<img>");
+          img.attr("class", "mr-3");
+          img.attr("scr", response.results[i].artworkUrl60);
+          img.attr("alt", "book cover")
+  
+          var div = $("<div>")
+          div.attr("class", "media-body")
+  
+          var title = $("<h5>" + response.results[i].trackName + "</h5>")
+          var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
+          var blurb = $("<p>" + response.results[i].description + "</p>")
+  
+          div.append(title + artist + "<br>" + blurb)
+          li.append(img + div)
+          $(".results").append(li)
+  
+        }
+      });
+    }
 
-
-
-    //  }
-    //});
-  //
-
+    else {
+      $.ajax({
+        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + authorKey + author + mediaKey + limitKey,
+        method: "GET"
+      }).then(function(responseString) {
+        console.log(responseString)
+        var response = JSON.parse(responseString);
+        
+        console.log(response)
+  
+        for (i=0;i<limit;i++){
+            var li = $('<li>');
+            li.attr("class", "media");
+  
+            var img = $("<img>");
+            img.attr("class", "mr-3");
+            img.attr("scr", response.results[i].artworkUrl60);
+            img.attr("alt", "book cover")
+  
+            var div = $("<div>")
+            div.attr("class", "media-body")
+  
+            var title = $("<h5>" + response.results[i].trackName + "</h5>")
+            var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
+            var blurb = $("<p>" + response.results[i].description + "</p>")
+  
+            div.append(title + artist + "<br>" + blurb)
+            li.append(img + div)
+            $(".results").append(li)
+  
+          }
+      });
+    }
     
-
-
-
-
   });
