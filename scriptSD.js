@@ -205,8 +205,6 @@ $('#search').on('click', (event) => {
           };
         };
       };
-      console.log(queryURL);
-      console.log(response);
     });
   };
 
