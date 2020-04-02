@@ -129,3 +129,7 @@ https://developer.mozilla.org/en-US/docs/Learn/CSS/Howto/create_fancy_boxes
 
 
 
+https://api.jquery.com/event.preventdefault/
+https://www.nikpro.com.au/what-is-e-target-and-e-currenttarget-and-how-to-use-them/
+https://api.jquery.com/submit/
+https://css-tricks.com/template-literals/
