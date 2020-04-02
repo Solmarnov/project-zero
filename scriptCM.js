@@ -87,7 +87,7 @@ $('.search').on('submit', (event) => {
   
           var img = $("<img>");
           img.attr("class", "mr-3");
-          img.attr("scr", response.results[i].artworkUrl100);
+          img.attr("src", response.results[i].artworkUrl60);
           img.attr("alt", "book cover")
   
           var div = $("<div>")
@@ -106,7 +106,7 @@ $('.search').on('submit', (event) => {
           artist.attr("target", "_blank")
 
           var blurb = $("<p>")
-          blurb.text(response.results[i].description)
+          blurb.html(response.results[i].description)
   
           div.append(title)
           div.append("<br>")
@@ -123,4 +123,5 @@ $('.search').on('submit', (event) => {
         }
       })
     
+      $('#genre').val("")
     });
