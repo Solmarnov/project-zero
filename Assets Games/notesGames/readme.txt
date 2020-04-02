@@ -19,7 +19,10 @@ Understanding API's :
         https://medium.com/mindorks/the-beginners-guide-to-easy-api-building-and-server-side-development-39da9333604b
         https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
 
-https://drive.google.com/file/d/1Bt5Io3ulqpKBEaZOaPPITYoUxXeLpcdT/view
+
+    Object Example
+
+        https://drive.google.com/file/d/1Bt5Io3ulqpKBEaZOaPPITYoUxXeLpcdT/view
 
 
 //================
@@ -33,12 +36,37 @@ API Stuff Pertaining to Project
 
 //===================================
 
+Populating HTML using .map 
+
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+
+//======================================
+
+
+
+    e.currenttarget
+        https://www.nikpro.com.au/what-is-e-target-and-e-currenttarget-and-how-to-use-them/
+
+
+//============================
 
 
 Template literals:
 
     Good Youtube vid
     https://www.youtube.com/watch?v=kj8HU-_P2NU
+
+
+    https://css-tricks.com/template-literals/
+
+    https://medium.com/better-programming/javascript-how-backticks-work-de269e0fb8bahttps://medium.com/better-programming/javascript-how-backticks-work-de269e0fb8ba
+
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+
+
+
+
 
 //============================
 

@@ -27,8 +27,7 @@ function queryGB(searchTerm, callback){
 	console.log(callback)
 }
 
-
-
+//Template literals and expressions. 
 function htmlAdd(result){
 	return `
 	<div class="box"> 
@@ -41,9 +40,8 @@ function htmlAdd(result){
 }
 
 
-//this is essentially taking our renderGame content and mapping the items to a new array
-//we use the data parameter, then run data.RESULTS(the giantbomb array of objects).map(renderGame)
-//then, appends the searchResults const to the flex-container.
+//uses .map to populate template above. 
+//data.results accesses giant bomb object. 
 function displayGame(data){
 	var searchResults = data.results.map(htmlAdd);
 	 if(searchResults.length>0){
@@ -52,29 +50,18 @@ function displayGame(data){
 }
 };
 
-//This runs our getData function, finds the search term based on the #searchText value,
-//then runs our displayGame as the callback, which maps out our RESULTS giantbomb object, and
-//appends the data.
+//Select form element. 
+//.submit event is sent when user clicks 'find game' as button type = submit
 function watchSubmit() {
-  $('form').submit(function(event) {
-    event.preventDefault();
-    let queryTarget = $(event.currentTarget).find('#searchText');
-    let query = queryTarget.val();
+  $('form').submit(function(e) {
+    var queryTarget = $(e.currentTarget).find('#searchText');
+    var query = queryTarget.val();
     queryTarget.val("");
 	queryGB(query, displayGame);
 	console.log(query);
   });
 }
 $(watchSubmit);
-
-//Below function for fading in retrieved results. 
-//Gets called in displaygame function. 
-	function fadeResults(){
-	$(`.box`).fadeIn(1500);
-	}
-
-
-
 
 
 //Search Parameters 
