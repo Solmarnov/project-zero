@@ -63,7 +63,7 @@ $('#search').on('click', (event) => {
   let notValid = $('.not-valid');
   parameterKeys.term = 'term=' + searchTermInput.val();
   let limitKey = '&limit=' + parameterKeys.limit;
-  let langKey = '&lang=' + parameterKeys.lang;
+  let countryKey = '&country=' + parameterKeys.country;
   let queryURL = '';
 
   // Form validation
@@ -73,7 +73,7 @@ $('#search').on('click', (event) => {
     mediaKey = '';
   } else {
     getMovieTVShow(isMovie, isTVShow);
-    queryURL = iTunesBaseQueryURL + parameterKeys.term + mediaKey + limitKey + langKey;
+    queryURL = iTunesBaseQueryURL + parameterKeys.term +countryKey + mediaKey + limitKey;
 
     $.ajax({
       url: queryURL,
@@ -88,7 +88,6 @@ $('#search').on('click', (event) => {
       console.log(resultsArray.length); // Passed
       
       for (let i = 0; i < resultsArray.length; i++) {
-        console.log(i);
         // API response data
         let title = resultsArray[i].trackName;
         let thumbnail = resultsArray[i].artworkUrl60;
@@ -127,8 +126,6 @@ $('#search').on('click', (event) => {
           .append(mediaBodyMDDiv);
         resultsUlEl.append(resultsLiEl);
       };
-  
-      console.log('result count: ' + resultCount);
       console.log(response);
     });
   };
