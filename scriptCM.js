@@ -76,7 +76,7 @@ $('.search').on('submit', (event) => {
         url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
         method: "GET"
       }).then(function(responseString) {
-        searchResultsH1.attr('hidden', false);
+        $(".results-heading").attr('hidden', false);
 
         console.log(responseString);
         var response = JSON.parse(responseString);
@@ -127,6 +127,10 @@ $('.search').on('submit', (event) => {
   
         };
       });
-    
-      $('#genre').val("");
     });
+
+$(".clear").on("click", function(){
+  $('#genre').val("");
+  $(".results").empty();
+  $(".results-heading").attr('hidden', true);
+});
