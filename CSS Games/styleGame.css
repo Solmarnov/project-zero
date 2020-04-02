@@ -1,0 +1,199 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+header{
+  padding: 30px;
+  background-color: rgb(45, 77, 184);
+  color: whitesmoke;
+}
+
+body{
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+/* h1 css. Font from google fonts */ 
+h1{
+	text-align: center;
+  color: whitesmoke;
+  font-family: 'Press Start 2P', cursive ;
+  font-size: 50px;
+  
+}
+
+/*grabs whole div, just centering element */ 
+.formDiv{
+	margin-top: 35px;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+/* css for search text. inside formdiv */ 
+#searchText{
+height: 50px;
+width: 300px;
+border-radius: 25px;
+border: 1px solid black;
+font-size: 12px;
+font-family: 'Monoton', cursive;
+padding-left: 10px;
+color: rgb(45, 77, 184);
+}
+
+/* css for submit button. inside formdiv */ 
+#submitButton{
+  height: 50px;
+  width: 150px;
+  border-radius: 25px;
+  font-family: 'Monoton', cursive;
+  border: 1px solid black;
+  font-size: 15px;
+  color: whitesmoke;
+  background-color: blue;
+}
+
+.modal-bg{ 
+  width: 100%;
+  margin-bottom: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url(retro.jpg);
+}
+
+.box{
+    text-align : center;
+    border : 0.5em solid, #7FDBFF; 
+    border-style:outset;
+    background-color: #0074D9;
+    width  : 450px;
+    min-height: 400px;
+    border-radius: 100%;
+    max-height: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+.box:hover {
+background-image: url(gamer.gif);
+}
+
+.gameTitle{
+  font-family: 'Bungee', cursive;
+ font-size: 15px;
+ color:whitesmoke;
+}
+
+.siteLink{
+	font-size: 15px;
+}
+
+img{
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+a{
+  color: whitesmoke;
+  text-decoration: none;
+  font-family: 'VT323', monospace;
+}
+
+.hide{
+  display: none;
+}
+
+.opacity{
+opacity: 0.5;
+}
+
+p{
+  font-weight: bold;
+  font-size: 15px;
+  font-family: 'VT323', monospace;
+  color: whitesmoke;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-image: url(gamefooter.jpg);
+  color: white;
+  text-align: center;
+}
+
+#fText{
+  size: 40px;
+}
+
+.footer {
+  animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;
+}
+
+/* For footer animation */ 
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+} }
+
+
