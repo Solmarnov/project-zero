@@ -23,9 +23,16 @@ function queryGB(searchTerm, callback){
 	};
 	$.ajax(settings)
 	console.log(settings);
-	console.log(callback)
+    console.log(callback)
 }
 
+/*
+function noCount(data){
+   
+    if(data.result.name.length > 0){
+        console.log("yas")
+    } 
+}  $(noCount); */ 
 //Template literals and expressions. 
 function htmlAdd(result){
 	return `
@@ -35,8 +42,10 @@ function htmlAdd(result){
 		<div> <p>${result.deck}<p> </div>
 		<div class="siteLink"> <a href="${result.site_detail_url}"target="_blank">Continue to Giant Bomb Page</a> </div>
   	</div>
-	`
+    `
 }
+
+
 
 //uses .map to populate template above. 
 //data.results accesses giant bomb object. 
@@ -62,6 +71,9 @@ function watchSubmit() {
 }
 $(watchSubmit);
 
+
+
+//scroll up button 
 //Get the button:
 mybutton = document.getElementById("myBtn");
 
