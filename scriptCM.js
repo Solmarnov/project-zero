@@ -76,10 +76,12 @@ $('.search').on('submit', (event) => {
         url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
         method: "GET"
       }).then(function(responseString) {
-        console.log(responseString)
+        searchResultsH1.attr('hidden', false);
+
+        console.log(responseString);
         var response = JSON.parse(responseString);
         
-        console.log(response)
+        console.log(response);
   
         for (i=0;i<limit;i++){
           var li = $('<li>');
@@ -88,43 +90,43 @@ $('.search').on('submit', (event) => {
           var img = $("<img>");
           img.attr("class", "mr-3");
           img.attr("src", response.results[i].artworkUrl60);
-          img.attr("alt", "book cover")
+          img.attr("alt", "book cover");
   
-          var div = $("<div>")
-          div.attr("class", "media-body")
+          var div = $("<div>");
+          div.attr("class", "media-body");
   
-          var title = $("<a>")
-          title.attr("class", "bookTitle")
-          title.text(response.results[i].trackName)
-          title.attr("href", response.results[i].trackViewUrl )
-          title.attr("target", "_blank")
+          var title = $("<a>");
+          title.attr("class", "bookTitle");
+          title.text(response.results[i].trackName);
+          title.attr("href", response.results[i].trackViewUrl);
+          title.attr("target", "_blank");
          
 
-          var artist = $("<a>")
-          artist.text("Author: " + response.results[i].artistName)
-          artist.attr("href", response.results[i].artistViewUrl )
-          artist.attr("target", "_blank")
+          var artist = $("<a>");
+          artist.text("Author: " + response.results[i].artistName);
+          artist.attr("href", response.results[i].artistViewUrl);
+          artist.attr("target", "_blank");
 
-          var price = $("<p>")
-          price.text(response.results[i].formattedPrice)
+          var price = $("<p>");
+          price.text(response.results[i].formattedPrice);
 
-          var blurb = $("<p>")
-          blurb.html(response.results[i].description)
+          var blurb = $("<p>");
+          blurb.html(response.results[i].description);
   
-          div.append(title)
-          div.append("<br>")
-          div.append(artist)
-          div.append(price)
-          div.append("<br>")
-          div.append(blurb)
+          div.append(title);
+          div.append("<br>");
+          div.append(artist);
+          div.append(price);
+          div.append("<br>");
+          div.append(blurb);
 
 
-          li.append(img)
-          li.append(div)
-          $(".results").append(li)
+          li.append(img);
+          li.append(div);
+          $(".results").append(li);
   
-        }
-      })
+        };
+      });
     
-      $('#genre').val("")
+      $('#genre').val("");
     });
