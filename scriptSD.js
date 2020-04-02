@@ -2,6 +2,7 @@
 https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 */
 
+const CORSAnywhere = 'https://cors-anywhere.herokuapp.com/';
 const iTunesBaseQueryURL = 'https://itunes.apple.com/search?';
 
 // The following object defines the parameter keys and values you can specify to search for content within the iTunes Store or Apple Books Store
@@ -33,7 +34,7 @@ parameterKeys = {
     all: ['actorTerm', 'languageTerm', 'allArtistTerm', 'tvEpisodeTerm', 'shortFilmTerm', 'directorTerm', 'releaseYearTerm', 'titleTerm', 'featureFilmTerm', 'ratingIndex', 'keywordsTerm', 'descriptionTerm', 'authorTerm', 'genreIndex', 'mixTerm', 'allTrackTerm', 'artistTerm', 'composerTerm', 'tvSeasonTerm', 'producerTerm', 'ratingTerm', 'songTerm', 'movieArtistTerm', 'showTerm', 'movieTerm', 'albumTerm']
   },
   callback: 'wsSearchCB', // Required for cross-site searches. The name of the Javascript callback function you want to use when returning search results to your website. For example: wsSearchCB.
-  limit: 5, // The number of search results you want the iTunes Store to return. For example: 25.The default is 50.
+  limit: 10, // The number of search results you want the iTunes Store to return. For example: 25.The default is 50.
   lang: 'en_au',
   version: 2, // The search result key version you want to receive back from your search.The default is 2.
   explicit: ['Yes', 'No'] // A flag indicating whether or not you want to include explicit content in your search results.The default is Yes.
@@ -42,38 +43,52 @@ parameterKeys = {
 // ****** TO WATCH PAGE ****** // 
 const checkboxMovie = $('#movie');
 const checkboxTV = $('#tvShows');
-const searchTermInput = $('#search-term')
+const notValidMovieTv = $('#movie-tv-not-valid');
+const searchTermInput = $('#search-term');
+const notValidSearchInput = $('#search-term-not-valid');
 const searchResultsH1 = $('.results-heading');
 const resultsUlEl = $('.results-list');
-// const checkboxRatedG = $('#rated-g');
-// const checkboxRatedPG = $('#rated-pg');
-// const checkboxRatedM = $('#rated-m');
-// const checkboxRatedMA15 = $('#rated-ma15');
-// const checkboxRatedR18 = $('#rated-r18');
-// const checkboxAllRatings = $('#all-ratings');
-// const actorsInput = $('#actors');
-// const directorsInput = $('#directors');
 
-
+// Search event
 $('#search').on('click', (event) => {
   event.preventDefault();
-  resultsUlEl.empty();
+  resetForm();
+
   let isMovie = checkboxMovie[0].checked;
   let isTVShow = checkboxTV[0].checked;
-  let notValid = $('.not-valid');
-  parameterKeys.term = 'term=' + searchTermInput.val();
+  let searchTermValue = searchTermInput.val();
+  let formattedSearchTerm = searchTermValue.replace(/ /g, '+');
   let limitKey = '&limit=' + parameterKeys.limit;
   let countryKey = '&country=' + parameterKeys.country;
   let queryURL = '';
+  
+  parameterKeys.term = 'term=' + formattedSearchTerm;
 
   // Form validation
-  if (isMovie == false && isTVShow == false) {
-    notValid.css('color', 'red');
-    notValid.attr('class', 'not-valid');
+  if (isMovie == false && isTVShow == false && parameterKeys.term == 'term=') {
+    notValidMovieTv
+      .css('color', 'red')
+      .attr('class', 'not-valid');
+    notValidSearchInput
+      .css('color', 'red')
+      .attr('class', 'not-valid');
     mediaKey = '';
-  } else {
+  } 
+  else if (isMovie == false && isTVShow == false) {
+    notValidMovieTv
+      .css('color', 'red')
+      .attr('class', 'not-valid');
+    mediaKey = '';
+  } 
+  else if (parameterKeys.term == 'term=') {
+    notValidSearchInput
+      .css('color', 'red')
+      .attr('class', 'not-valid');
+    mediaKey = '';
+  } 
+  else {
     getMovieTVShow(isMovie, isTVShow);
-    queryURL = iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + limitKey;
+    buildQueryURL(isMovie, isTVShow);
 
     $.ajax({
       url: queryURL,
@@ -85,73 +100,112 @@ $('#search').on('click', (event) => {
       let resultsArray = response.results;
       let resultCount = response.resultCount;
 
-      console.log(resultsArray.length); // Passed
-      
-      for (let i = 0; i < resultCount; i++) {
-        // API response data
-        let title = resultsArray[i].trackName;
-        let trackViewURL = resultsArray[i].trackViewUrl;
-        let thumbnail = resultsArray[i].artworkUrl60;
-        let trackPrice = resultsArray[i].trackPrice;
-        let trackRentalPrice = resultsArray[i].trackRentalPrice;
-        let releaseDate = resultsArray[i].releaseDate;
-        let releaseYear = releaseDate.slice(0, 4);
-        let advisoryRating = resultsArray[i].contentAdvisoryRating;
-        let shortDescription = resultsArray[i].shortDescription;
-        let longDescription = resultsArray[i].longDescription;
-        let previewURL = resultsArray[i].previewUrl;
-        // HTML elements to render results
-        let resultsLiEl = $('<li class="media mb-4">');
-        let imageEl = $('<img class="mr-3">');
-        let mediaBodyXSDiv = $('<div class="media-body d-md-none">');
-        let mediaBodyMDDiv = $('<div class="media-body d-none d-md-block">');
-        let h5ElXS = $('<h5 class="mt-0 mb-1">');
-        let h5ElMD = $('<h5 class="mt-0 mb-1">');
-        let aElXS = $('<a>');
-        let aElMD = $('<a>');
-        let trackInfoDiv = $('<div class="track-info">');
-        let ratingSpan = $('<span class="advisory-rating mr-3">');
-        let priceSpan = $('<span class="to-buy-price mr-3">');
-        let rentSpan = $('<span class="to-rent-price mr-3">');
-        let previewDiv = $('<div class="preview d-none d-md-block my-2">');
-        let videoEl = $('<video>');
-        // Build list items
-        videoEl
-          .attr('src', previewURL)
-          .attr('controls', true);
-        previewDiv.append(videoEl);
-        aElXS
-          .attr('href', trackViewURL)
-          .attr('target', '_blank')
-          .text(title + ' (' + releaseYear + ')');
-        h5ElXS.append(aElXS);
-        aElMD
-          .attr('href', trackViewURL)
-          .attr('target', '_blank')
-          .text(title + ' (' + releaseYear + ')');
-        h5ElMD.append(aElMD);
-        ratingSpan.text('Rating: ' + advisoryRating);
-        priceSpan.text('Buy: $' + trackPrice);
-        rentSpan.text('Rent: $' + trackRentalPrice);
-        trackInfoDiv
-          .append(ratingSpan)
-          .append(priceSpan)
-          .append(rentSpan);
-        mediaBodyXSDiv
-          .text(shortDescription)
-          .prepend(h5ElXS);
-        mediaBodyMDDiv
-          .text(longDescription)
-          .prepend(trackInfoDiv)
-          .prepend(h5ElMD)
-          .append(previewDiv);
-        imageEl.attr('src', thumbnail);
-        resultsLiEl
-          .append(imageEl)
-          .append(mediaBodyXSDiv)
-          .append(mediaBodyMDDiv);
-        resultsUlEl.append(resultsLiEl);
+      // Result count validation before entering for loop
+      if (resultCount == 0) {
+        let noResultsDiv = $('<div class="no-results-returned">');
+        noResultsDiv.text('No matches found. Please try again.');
+        $('.results').append(noResultsDiv);
+      } 
+      else {
+        $('no-results-returned').empty();
+        for (let i = 0; i < resultCount; i++) {
+          // API response data (general)
+          let thumbnail = resultsArray[i].artworkUrl100;
+          let advisoryRating = resultsArray[i].contentAdvisoryRating;
+          let releaseDate = resultsArray[i].releaseDate;
+          let releaseYear = releaseDate.slice(0, 4);
+          let longDescription = resultsArray[i].longDescription;
+          // API response data (for movies)
+          let mediaType = resultsArray[i].kind;
+          let title = resultsArray[i].trackName;
+          let trackViewURL = resultsArray[i].trackViewUrl;
+          let trackPrice = resultsArray[i].trackPrice;
+          let trackRentalPrice = resultsArray[i].trackRentalPrice;
+          let shortDescription = resultsArray[i].shortDescription;
+          let previewURL = resultsArray[i].previewUrl;
+          // API response data (for shows)
+          let collectionType = resultsArray[i].collectionType; 
+          let collectionName = resultsArray[i].collectionName;
+          let collectionViewURL = resultsArray[i].collectionViewUrl;
+          let collectionPrice = resultsArray[i].collectionPrice;
+
+          // HTML elements to render results
+          let resultsLiEl = $('<li class="media mb-4">');
+          let imageEl = $('<img class="mr-3">');
+          let mediaBodyDiv = $('<div class="media-body">');
+          let h5El = $('<h5 class="mt-0 mb-1">');
+          let aEl = $('<a>');
+          let pElXS = $('<p class="d-md-none">');
+          let pElMD = $('<p class="d-none d-md-block">');
+          let trackInfoDiv = $('<div class="track-info font-weight-bold">');
+          let ratingSpan = $('<span class="advisory-rating mr-3">');
+          let priceSpan = $('<span class="to-buy-price mr-3">');
+          let rentSpan = $('<span class="to-rent-price mr-3">');
+          let releaseYearSpan = $('<span class="release-year">');
+          let previewDiv = $('<div class="preview d-none d-md-block my-2">');
+          let videoEl = $('<video>');
+  
+          // Build list items
+          if (mediaType == 'feature-movie') {
+            videoEl
+              .attr('src', previewURL)
+              .attr('controls', true);
+            previewDiv.append(videoEl);
+            aEl
+              .attr('href', trackViewURL)
+              .attr('target', '_blank')
+              .text(title);
+            h5El.append(aEl);
+            ratingSpan.text('Rating: ' + advisoryRating);
+            priceSpan.text('Buy: $' + trackPrice);
+            rentSpan.text('Rent: $' + trackRentalPrice);
+            releaseYearSpan.text('Released: ' + releaseYear);
+            trackInfoDiv
+              .append(ratingSpan)
+              .append(priceSpan)
+              .append(rentSpan)
+              .append(releaseYearSpan);
+            pElXS.text(shortDescription);
+            pElMD.text(longDescription);
+            mediaBodyDiv
+              .append(h5El)
+              .append(trackInfoDiv)
+              .append(pElXS)
+              .append(pElMD)
+              .append(previewDiv);
+            imageEl.attr('src', thumbnail);
+            resultsLiEl
+              .append(imageEl)
+              .append(mediaBodyDiv);
+            resultsUlEl.append(resultsLiEl);
+          }
+          else if (collectionType == 'TV Season') {
+            aEl
+              .attr('href', collectionViewURL)
+              .attr('target', '_blank')
+              .text(collectionName);
+            h5El.append(aEl);
+            ratingSpan.text('Rating: ' + advisoryRating);
+            priceSpan.text('Buy: $' + collectionPrice);
+            releaseYearSpan.text('Released: ' + releaseYear);
+            trackInfoDiv
+              .append(ratingSpan)
+              .append(priceSpan)
+              .append(releaseYearSpan);
+            pElMD.text(longDescription);
+            mediaBodyDiv
+              .append(h5El)
+              .append(trackInfoDiv)
+              .append(pElMD);
+            imageEl.attr('src', thumbnail);
+            resultsLiEl
+              .append(imageEl)
+              .append(mediaBodyDiv);
+            resultsUlEl.append(resultsLiEl);;
+          };
+        };
       };
+      console.log(queryURL);
       console.log(response);
     });
   };
@@ -160,40 +214,57 @@ $('#search').on('click', (event) => {
   function getMovieTVShow(isMovie, isTVShow) {
     let mediaValueMovie = parameterKeys.media[0];
     let mediaValueTVShow = parameterKeys.media[6];
+    let entityValueTVShow = parameterKeys.entity.tvShow[1];
 
-    if (isMovie && isTVShow) {
-      let mediaValue = '&media=' + mediaValueMovie + '&media=' + mediaValueTVShow;
-      mediaKey = mediaValue;
-      notValid.attr('class', 'd-none not-valid');
-    } else if (isMovie) {
+    if (isMovie) {
       let mediaValue = '&media=' + mediaValueMovie;
       mediaKey = mediaValue;
-      notValid.attr('class', 'd-none not-valid');
-    } else {
+      notValidMovieTv.attr('class', 'd-none not-valid');
+    } 
+    else if (isTVShow) {
       let mediaValue = '&media=' + mediaValueTVShow;
+      let entityValue = '&entity=' + entityValueTVShow;
       mediaKey = mediaValue;
+      entityKey = entityValue;
+    };
+  };
+
+  function buildQueryURL(isMovie, isTVShow) {
+    if (isMovie) {
+      queryURL = CORSAnywhere + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + limitKey;
+    } 
+    else if (isTVShow) {
+      queryURL = CORSAnywhere + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + entityKey + limitKey;
     };
   };
 });
 
 
+// Clear event
 $('#clear-results').on('click', () => {
-  clearForm();
+  clearFormInputs();
+  resetForm();
   resetParameterKeys();
 });
 
-function clearForm() {
+function clearFormInputs() {
   checkboxMovie[0].checked = false;
   checkboxTV[0].checked = false;
   searchTermInput.val('');
+};
+
+function resetForm() {
+  notValidMovieTv.attr('class', 'd-none not-valid');
+  notValidSearchInput.attr('class', 'd-none not-valid');
   searchResultsH1.attr('hidden', true);
   resultsUlEl.empty();
+  $('.no-results-returned').empty();
 };
 
 function resetParameterKeys() {
   parameterKeys.term = '';
   parameterKeys.country = 'au';
-  parameterKeys.limit = 25;
+  parameterKeys.limit = 10;
   parameterKeys.lang = 'en_au';
   parameterKeys.version = 2;
 };

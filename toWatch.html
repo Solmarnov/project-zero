@@ -30,16 +30,16 @@
         <div class="container main search">
           <div class="card-body">
             <form class="needs-validation" novalidate>
-              <p>Movie or Tv Show:</p>
-              <div class="custom-control custom-checkbox custom-control-inline" id="movie-tv">
-                <input class="custom-control-input" type="checkbox" id="movie" value="movie">
+              <p>Movie or TV Show:</p>
+              <div class="custom-control custom-radio custom-control-inline" id="movie-tv">
+                <input class="custom-control-input" type="radio" name="movie-or=tv" id="movie" value="movie">
                 <label class="custom-control-label" for="movie">Movie</label>
               </div>
-              <div class="custom-control custom-checkbox custom-control-inline">
-                <input class="custom-control-input" type="checkbox" id="tvShows" value="tvShow">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="movie-or=tv" id="tvShows" value="tvShow">
                 <label class="custom-control-label" for="tvShows">TV Show</label>
               </div>
-              <div class="d-none not-valid" id="movie-tv">
+              <div class="d-none not-valid" id="movie-tv-not-valid">
                 Would you like to search Movies or TV Shows?
               </div>
               <br>
@@ -47,6 +47,9 @@
               <div class="form-group">
                 <label for="search-term">Search</label>
                 <input type="text" class="form-control" id="search-term">
+                <div class="d-none not-valid" id="search-term-not-valid">
+                  What would you like to search for?
+                </div>
               </div>
             </form>
               <button type="submit" class="btn btn-primary search" id="search">
