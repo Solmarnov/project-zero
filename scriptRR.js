@@ -53,6 +53,8 @@ function displayGame(data){
 //.submit event is sent when user clicks 'find game' as button type = submit
 function watchSubmit() {
   $('form').submit(function(e) {
+      //fixed loading issue with prevent default
+    e.preventDefault();
     var queryTarget = $(e.currentTarget).find('#searchText');
     var query = queryTarget.val();
     queryTarget.val("");
