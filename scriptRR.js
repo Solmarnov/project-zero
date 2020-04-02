@@ -3,7 +3,6 @@ var apiKey = "39c89d285fcb0941c08ccdc2220bde62bff4e8c3"
 
 var searchURL = `https://www.giantbomb.com/api/search/`
 
-
 //the request to the giantbomb api, searchTerm and callback is inside watchSubmit()
 function queryGB(searchTerm, callback){
 	var settings = {
@@ -64,6 +63,11 @@ function watchSubmit() {
 $(watchSubmit);
 
 
+
+
+
+
+//============================================================
 //Search Parameters 
 
 /*
@@ -149,8 +153,6 @@ function updatePage(GBData) {
 
 
 */ 
-
-
 /*
 var queryURL =  "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query="
 
@@ -196,7 +198,6 @@ function buildQueryURL(){
 */ 
 
 /*
-
 $("#search").click(function() {
 
   
@@ -217,10 +218,7 @@ $("#search").click(function() {
     console.log(genType);
     console.log(studio);
 
-});
-
-
-    
+});  
      /*
     Keep till finished 
     var queryParams = {"query": gType, genType, studio}
@@ -228,31 +226,17 @@ $("#search").click(function() {
     /*
     var searchResults = JSON.stringify(gType + genType  + studio );
     console.log(searchResults);
-
-
-
-    
-
     var actualSearch = queryURL + encodeURIComponent(searchResults);  
-    console.log(actualSearch); 
-
-  
-    
+    console.log(actualSearch);   
 }); 
-
-
-
 /* this is the clear input onclick function. Will clear inputs onClick */ 
 /*
 $("#clear").click(function(){
     console.log('clear');
     $("#type").val(' ');
     $("#genre").val('');
-    $("#studio").val(''); 
-
-  
+    $("#studio").val('');  
 }); 
-
 /*
 $.ajax({
     url: "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=%22first%20person%20shooter%22&resource_type=games",
@@ -260,9 +244,6 @@ $.ajax({
   }).then(function(response) {
     console.log(url);
   });
-
-
-
 /*
 $.ajax({
     url: queryURL,
