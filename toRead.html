@@ -25,11 +25,11 @@
             <div class="container main search">
                 
                 <div class="card-body">
-                    <form class="needs-validation" novalidate>
+                    <form>
                         <p>What Are You Looking For?</p>
                         <div class="form-group">
                           <label for="genre">Catergory/Genre:</label>
-                          <input type="text" class="form-control" id="genre">
+                          <input type="text" class="form-control" id="genre" required>
                         </div>
                         <div class="invalid-feedback">
                           What catergory/genre are you looking for?
@@ -38,7 +38,7 @@
                             <label for="actors">Author (Optional):</label>
                             <input type="text" class="form-control" id="author">
                           </div>
-                      </form>
+                    
                     <button type="submit" class="btn btn-primary search">
                         <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
@@ -54,28 +54,27 @@
                           </svg>
                         Clear Results
                     </button>
-    
+                    <br>
+                    <br>
+                    <a href="main-page.html" class="btn backbtn btn-primary">
+                      Back
+                      <svg class="bi bi-arrow-counterclockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M12.83 6.706a5 5 0 00-7.103-3.16.5.5 0 11-.454-.892A6 6 0 112.545 5.5a.5.5 0 11.91.417 5 5 0 109.375.789z" clip-rule="evenodd"/>
+                          <path fill-rule="evenodd" d="M7.854.146a.5.5 0 00-.708 0l-2.5 2.5a.5.5 0 000 .708l2.5 2.5a.5.5 0 10.708-.708L5.707 3 7.854.854a.5.5 0 000-.708z" clip-rule="evenodd"/>
+                      </svg>
+                    </a>
+                  </form>
+
                 </div>
               </div>
             </div>
             
-            <div class="container main results"></div>
+            <div class="container main">
+              <ul class="list-unstyled results"></ul>
+            </div>
 
         </section>
 
-        <br>
-
-        <div class="container backbtn" style="width: 110px;">
-          <a href="main-page.html" class="btn backbtn btn-primary">
-            Back
-            <svg class="bi bi-arrow-counterclockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M12.83 6.706a5 5 0 00-7.103-3.16.5.5 0 11-.454-.892A6 6 0 112.545 5.5a.5.5 0 11.91.417 5 5 0 109.375.789z" clip-rule="evenodd"/>
-                <path fill-rule="evenodd" d="M7.854.146a.5.5 0 00-.708 0l-2.5 2.5a.5.5 0 000 .708l2.5 2.5a.5.5 0 10.708-.708L5.707 3 7.854.854a.5.5 0 000-.708z" clip-rule="evenodd"/>
-            </svg>
-          </a>
-        </div>
-
-        <br>
         <br>
 
         <footer></footer>
