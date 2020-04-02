@@ -1,20 +1,106 @@
+
+var apiKey = "39c89d285fcb0941c08ccdc2220bde62bff4e8c3"
+
+var searchURL = `https://www.giantbomb.com/api/search/`
+
+
+//the request to the giantbomb api, searchTerm and callback is inside watchSubmit()
+function queryGB(searchTerm, callback){
+	var settings = {
+		url: searchURL,
+		data: {
+			api_key: apiKey,
+			query: `"${searchTerm}"`,
+			format: "jsonp",
+			resources: "game", 
+			limit: 20
+		},
+		/* prevents CORS error */ 
+		type: "GET",
+		dataType: "jsonp",
+		crossDomain: true,
+		jsonp: "json_callback",
+		success: callback	
+	};
+	$.ajax(settings)
+	console.log(settings);
+	console.log(callback)
+}
+
+
+
+function htmlAdd(result){
+	return `
+	<div class="box"> 
+		<div> <img src= "${result.image.medium_url}"> <div>
+		<div> <p class="gameTitle"> ${result.name} </p> </div>
+		<div> <p>${result.deck}<p> </div>
+		<div class="siteLink"> <a href="${result.site_detail_url}"target="_blank">Continue to Giant Bomb Page</a> </div>
+  	</div>
+	`
+}
+
+
+//this is essentially taking our renderGame content and mapping the items to a new array
+//we use the data parameter, then run data.RESULTS(the giantbomb array of objects).map(renderGame)
+//then, appends the searchResults const to the flex-container.
+function displayGame(data){
+	var searchResults = data.results.map(htmlAdd);
+	 if(searchResults.length>0){
+	$(`.modal-bg`).html(searchResults);
+	fadeResults();
+}
+};
+
+//This runs our getData function, finds the search term based on the #searchText value,
+//then runs our displayGame as the callback, which maps out our RESULTS giantbomb object, and
+//appends the data.
+function watchSubmit() {
+  $('form').submit(function(event) {
+    event.preventDefault();
+    let queryTarget = $(event.currentTarget).find('#searchText');
+    let query = queryTarget.val();
+    queryTarget.val("");
+	queryGB(query, displayGame);
+	console.log(query);
+  });
+}
+$(watchSubmit);
+
+//Below function for fading in retrieved results. 
+//Gets called in displaygame function. 
+	function fadeResults(){
+	$(`.box`).fadeIn(1500);
+	}
+
+
+
+
+
 //Search Parameters 
+
+/*
 var gType = "";
 var genType = ""; 
 var studio = ""; 
-
+*/ 
 //URL Base 
+/*
 var queryURLBase = "https://www.giantbomb.com/api/search/?api_key=39c89d285fcb0941c08ccdc2220bde62bff4e8c3&format=json&query=";
-
+*/ 
 //Varible to Track Number of Games
+/*
 var gameCounter = 0; 
+*/ 
 
 //Functions
 //============================
-
+/* 
 function runQuery(queryURL){
-
+*/ 
         //AJAX Function
+
+        /*
         $.ajax({url: queryURL, 
             type: "GET", 
             dataType: "jsonp", 
@@ -29,9 +115,10 @@ function runQuery(queryURL){
 
 };
 
-
+*/ 
 //MAIN PROCESSES
 //======================================
+/*
 $("#search").click(function() {
 
     var gType = $("#type")
@@ -57,7 +144,7 @@ $("#search").click(function() {
 
     /*Send the AJAX Call the new URL from this onClick function
     runQuery(10, newURL);
-    */
+    
 });
 
 
@@ -74,7 +161,7 @@ function updatePage(GBData) {
 
 
 
-
+*/ 
 
 
 /*
