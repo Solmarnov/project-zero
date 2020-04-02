@@ -2,7 +2,7 @@
 https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 */
 
-const CORSAnywhere = 'https://cors-anywhere.herokuapp.com/';
+const CORSAnywhereURL = 'https://cors-anywhere.herokuapp.com/';
 const iTunesBaseQueryURL = 'https://itunes.apple.com/search?';
 
 // The following object defines the parameter keys and values you can specify to search for content within the iTunes Store or Apple Books Store
@@ -231,10 +231,10 @@ $('#search').on('click', (event) => {
 
   function buildQueryURL(isMovie, isTVShow) {
     if (isMovie) {
-      queryURL = CORSAnywhere + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + limitKey;
+      queryURL = CORSAnywhereURL + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + limitKey;
     } 
     else if (isTVShow) {
-      queryURL = CORSAnywhere + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + entityKey + limitKey;
+      queryURL = CORSAnywhereURL + iTunesBaseQueryURL + parameterKeys.term + countryKey + mediaKey + entityKey + limitKey;
     };
   };
 });
@@ -267,4 +267,24 @@ function resetParameterKeys() {
   parameterKeys.limit = 10;
   parameterKeys.lang = 'en_au';
   parameterKeys.version = 2;
+};
+
+//Get the button:
+mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  };
+};
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 };

@@ -37,6 +37,7 @@ parameterKeys = {
     explicit: ['Yes', 'No'] // A flag indicating whether or not you want to include explicit content in your search results.The default is Yes.
   };
   
+  var CORSAnywhereURL = 'https://cors-anywhere.herokuapp.com/';
   var baseQueryURL = 'https://itunes.apple.com/search?';
   var termKey = 'term=';
   var countryKey = '&country=' + parameterKeys.country;
@@ -73,7 +74,7 @@ $('.search').on('submit', (event) => {
   
 
       $.ajax({
-        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
+        url: CORSAnywhereURL + baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
         method: "GET"
       }).then(function(responseString) {
         $(".results-heading").attr('hidden', false);
