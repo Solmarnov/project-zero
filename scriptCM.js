@@ -54,9 +54,7 @@ $('.search').on('submit', (event) => {
 
     var genre = $('#genre').val();
   
-    var author = $('#author').val(); 
 
-    if ($("#author").val() === ""){
       $.ajax({
         url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + mediaKey + limitKey,
         method: "GET"
@@ -72,56 +70,30 @@ $('.search').on('submit', (event) => {
   
           var img = $("<img>");
           img.attr("class", "mr-3");
-          img.attr("scr", response.results[i].artworkUrl60);
+          img.attr("scr", response.results[i].artworkUrl100);
           img.attr("alt", "book cover")
   
           var div = $("<div>")
           div.attr("class", "media-body")
   
-          var title = $("<h5>" + response.results[i].trackName + "</h5>")
-          var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
-          var blurb = $("<p>" + response.results[i].description + "</p>")
+          var title = $("<h5>")
+          title.text(response.results[i].trackName)
+          var artist = $("<p>")
+          artist.text("Author: " + response.results[i].artistName)
+          var blurb = $("<p>")
+          blurb.text(response.results[i].description)
   
-          div.append(title + artist + "<br>" + blurb)
-          li.append(img + div)
+          div.append(title)
+          div.append(artist)
+          div.append("<br>")
+          div.append(blurb)
+
+
+          li.append(img)
+          li.append(div)
           $(".results").append(li)
   
         }
       });
-    }
-
-    else {
-      $.ajax({
-        url: baseQueryURL + termKey + genre + countryKey + genreKey + genre + authorKey + author + mediaKey + limitKey,
-        method: "GET"
-      }).then(function(responseString) {
-        console.log(responseString)
-        var response = JSON.parse(responseString);
-        
-        console.log(response)
-  
-        for (i=0;i<limit;i++){
-            var li = $('<li>');
-            li.attr("class", "media");
-  
-            var img = $("<img>");
-            img.attr("class", "mr-3");
-            img.attr("scr", response.results[i].artworkUrl60);
-            img.attr("alt", "book cover")
-  
-            var div = $("<div>")
-            div.attr("class", "media-body")
-  
-            var title = $("<h5>" + response.results[i].trackName + "</h5>")
-            var artist = $("<p>" + "Author: " + response.results[i].artistName + "</p>")
-            var blurb = $("<p>" + response.results[i].description + "</p>")
-  
-            div.append(title + artist + "<br>" + blurb)
-            li.append(img + div)
-            $(".results").append(li)
-  
-          }
-      });
-    }
     
   });
