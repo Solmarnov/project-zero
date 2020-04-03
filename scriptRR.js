@@ -65,7 +65,8 @@ function displayGame(data){
 function watchSubmit() {
   $('form').submit(function(e) {
       //fixed loading issue with prevent default
-    e.preventDefault();
+	e.preventDefault();
+	$(".results-heading").attr('hidden', false);
     var queryTarget = $(e.currentTarget).find('#searchBar');
     var query = queryTarget.val();
     queryTarget.val("");
@@ -76,6 +77,12 @@ function watchSubmit() {
 $(watchSubmit);
 
 //--------------------------------------------------//
+
+$(".clear").on("click", function(){
+	$('#searchBar').val("");
+	$(".results").empty();
+	$(".results-heading").attr('hidden', true);
+  });
 
 //scroll up button 
 //Get the button:
