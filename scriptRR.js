@@ -38,12 +38,14 @@ function noCount(data){
 //Template literals and expressions. 
 function htmlAdd(result){
 	return `
-	<div class="box"> 
-		<div> <img src= "${result.image.medium_url}"> <div>
-		<div> <p class="gameTitle"> ${result.name} </p> </div>
-		<div> <p>${result.deck}<p> </div>
-		<div class="siteLink"> <a href="${result.site_detail_url}"target="_blank">Continue to Giant Bomb Page</a> </div>
-  	</div>
+	<li class="media">
+    	<img src="${result.image.medium_url}" class="mr-3" alt="game cover" style="height: 200px;">
+    	<div class="media-body">
+			  <a href="${result.site_detail_url}"class="mt-0 mb-1 searchTitle">${result.name}</a>
+			  <p>${result.deck}</p>
+		</div>
+	  </li>
+	  <br>
     `
 }
 
@@ -54,7 +56,7 @@ function htmlAdd(result){
 function displayGame(data){
 	var searchResults = data.results.map(htmlAdd);
 	 if(searchResults.length>0){
-	$(`.modal-bg`).html(searchResults);
+	$(`.results`).html(searchResults);
 }
 };
 
@@ -64,7 +66,7 @@ function watchSubmit() {
   $('form').submit(function(e) {
       //fixed loading issue with prevent default
     e.preventDefault();
-    var queryTarget = $(e.currentTarget).find('#searchText');
+    var queryTarget = $(e.currentTarget).find('#searchBar');
     var query = queryTarget.val();
     queryTarget.val("");
 	queryGB(query, displayGame);
@@ -73,7 +75,7 @@ function watchSubmit() {
 }
 $(watchSubmit);
 
-
+//--------------------------------------------------//
 
 //scroll up button 
 //Get the button:

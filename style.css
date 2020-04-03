@@ -5,6 +5,7 @@ header{
 }
 
 h1{
+    font-size: 50px;
     text-align: center;
     font-family: 'Indie Flower', cursive;
 }
@@ -53,7 +54,7 @@ footer {
     padding: 5px
 }
 
-.bookTitle {
+.searchTitle {
     font-size: 40px;
 }
 #myBtn {

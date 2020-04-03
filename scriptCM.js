@@ -97,7 +97,7 @@ $('.search').on('submit', (event) => {
           div.attr("class", "media-body");
   
           var title = $("<a>");
-          title.attr("class", "bookTitle");
+          title.attr("class", "searchTitle");
           title.text(response.results[i].trackName);
           title.attr("href", response.results[i].trackViewUrl);
           title.attr("target", "_blank");
