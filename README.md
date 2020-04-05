@@ -13,7 +13,7 @@ A collaboration and first joint project between 3 full stack programming bootcam
 **toWatch** page with search example  
 <img src="https://user-images.githubusercontent.com/59265518/78463980-210ab080-7727-11ea-9b90-a112af6ac1cb.png">
 
-**toRead** page with search exxample  
+**toRead** page with search example  
 <img src="https://user-images.githubusercontent.com/59265518/78463999-59aa8a00-7727-11ea-8f56-c9729f0dd494.png">
 
 **toPlay** page with search example  
